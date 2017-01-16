@@ -1,0 +1,23 @@
+AllCops:
+  Exclude:
+    - 'tmp/**/*'
+    - 'spec/fixtures/application/htdocs/stylesheets/**/config.rb'
+    - 'config/**/*'
+    - 'Vagrantfile'
+    - 'vendor/**/*'
+GlobalVars:
+  AllowedVariables: []
+MethodLength:
+  Max: 30
+LineLength:
+  Max: 200
+SpecialGlobalVars:
+  Enabled: false
+BracesAroundHashParameters:
+  Enabled: false
+CyclomaticComplexity:
+  Max: 10
+AbcSize:
+  Max: 25
+SpaceAfterComma:
+  Enabled: false

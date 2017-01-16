@@ -1,0 +1,18 @@
+<?php
+
+$handle = fopen('<%= fetch(:caretaker_instance_keys_path) %>', 'w');
+fwrite($handle, "<?php
+\$TYPO3_CONF_VARS['EXT']['extConf']['caretaker_instance'] = serialize(
+    array_replace_recursive(
+        unserialize(\$TYPO3_CONF_VARS['EXT']['extConf']['caretaker_instance']),
+        array (
+            'crypto.' => array(
+                'instance.' => array(
+                    'publicKey' => '" . str_replace("\\n", '|', file_get_contents('<%= fetch(:caretaker_public_key_path) %>')) . "',
+                    'privateKey' => '" . str_replace("\\n", '|', file_get_contents('<%= fetch(:caretaker_private_key_path) %>')) . "'
+                )
+            )
+        )
+    )
+);
+?>");

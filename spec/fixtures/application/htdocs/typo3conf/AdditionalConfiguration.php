@@ -1,0 +1,3 @@
+<?php
+
+putenv('TYPO3_DISABLE_CORE_UPDATER=1');

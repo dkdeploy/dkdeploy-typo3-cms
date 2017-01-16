@@ -1,0 +1,8 @@
+# Load DSL and Setup Up Stages
+require 'capistrano/setup'
+
+# Includes default deployment tasks
+require 'capistrano/deploy'
+
+# Includes dkdeploy deployment tasks
+require 'capistrano/dkdeploy/typo3_cms'

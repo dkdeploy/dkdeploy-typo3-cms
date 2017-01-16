@@ -1,0 +1,57 @@
+<?php
+<% if File.exist?(File.join('htdocs', 'typo3conf', 'AdditionalConfiguration.php')) %>
+// Content of default configuration file
+<%= sanitize_php File.read(File.join('htdocs', 'typo3conf', 'AdditionalConfiguration.php')) %>
+<% end %>
+<% if File.exist?(File.join('config', 'typo3', "AdditionalConfiguration.#{fetch(:stage)}.php")) %>
+
+// Content of stage configuration file
+<%= sanitize_php File.read(File.join('config', 'typo3', "AdditionalConfiguration.#{fetch(:stage)}.php")) %>
+<% end %>
+<% if defined?(server) && server.properties.respond_to?(:additional_configuration_file)
+	configuration_file = server.fetch(:additional_configuration_file)
+	if File.exist? configuration_file
+		file_content = File.read(File.join(configuration_file))
+		if File.extname(configuration_file) == '.erb'
+			# Use ruby template parsing for '.erb' files
+			file_content = ERB.new(file_content, nil, '>', '_additional_server_template').result(binding)
+		end %>
+
+// Content of server "<%= server %>" configuration file "<%= File.basename configuration_file %>"
+<%= sanitize_php file_content %>
+<% 	else
+		warn I18n.t('tasks.typo3.cms.v6.setup_additional_configuration.file_not_found_and_ignored', file: configuration_file,  scope: :dkdeploy)
+	end
+end
+%>
+<% if any?(:additional_configuration_files) && fetch(:additional_configuration_files).kind_of?(Array)
+	fetch(:additional_configuration_files).each_with_index do | configuration_file,index |
+		if File.exist? configuration_file
+				file_content = File.read(File.join(configuration_file))
+				if File.extname(configuration_file) == '.erb'
+					# Use ruby template parsing for '.erb' files
+					file_content = ERB.new(file_content, nil, '>', "_additional_template_#{index}").result(binding)
+				end %>
+
+// Content of additional configuration file "<%= File.basename configuration_file %>"
+<%= sanitize_php file_content %>
+<% 		else
+			warn I18n.t('tasks.typo3.cms.v6.setup_additional_configuration.file_not_found_and_ignored', file: configuration_file,  scope: :dkdeploy)
+		end
+	end
+end
+%>
+
+// Include section
+<% if execute(:test, '-e', "#{shared_path}/config/db_settings.#{fetch(:stage)}.php", raise_on_non_zero_exit: false) %>
+include('<%= shared_path %>/config/db_settings.<%= fetch(:stage) %>.php');
+<% end %>
+<% if execute(:test, '-e', "#{shared_path}/config/install_tool_password.php", raise_on_non_zero_exit: false) %>
+include('<%= shared_path %>/config/install_tool_password.php');
+<% end %>
+<% if execute(:test, '-e', "#{shared_path}/config/encryption_key.php", raise_on_non_zero_exit: false) %>
+include('<%= shared_path %>/config/encryption_key.php');
+<% end %>
+<% if execute(:test, '-e', "#{shared_path}/config/caretaker_instance_keys.php", raise_on_non_zero_exit: false) %>
+include('<%= shared_path %>/config/caretaker_instance_keys.php');
+<% end %>
