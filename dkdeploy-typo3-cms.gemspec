@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler', '~> 1.12.5'
   spec.add_development_dependency 'rake', '~> 11.2'
-  spec.add_development_dependency 'rubocop', '~> 0.46'
+  spec.add_development_dependency 'rubocop', '0.46'
   spec.add_development_dependency 'dkdeploy-test_environment', '~> 1.0'
 
   spec.add_dependency 'dkdeploy-php', '~> 7.0'

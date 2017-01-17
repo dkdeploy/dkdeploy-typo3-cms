@@ -46,7 +46,7 @@ Certainly you have to adjust `config/deploy.rb` and respective stages and custom
 
 As next you have to append the following line to the `Capfile` in order to make use of dkdeploy extensions in addition to the standard Capistrano tasks:
 
-	require 'capistrano/dkdeploy/typo3-cms'
+	require 'capistrano/dkdeploy/typo3_cms'
 
 To convince yourself, that Capistrano tasks list has benn extended, please run
 
