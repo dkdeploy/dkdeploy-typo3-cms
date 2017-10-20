@@ -27,7 +27,8 @@ namespace :load do
       TERM: 'screen-256color'
     }
     # Path to typo3_console. Relative path to typo3_console script
-    set :path_to_typo3_console, 'bin/typo3cms'
+    set :path_to_typo3_console, File.join('bin', 'typo3cms')
+    set :path_to_typo3_cli, File.join('bin', 'typo3')
 
     set :additional_configuration_template, File.join(__dir__, '..', '..', '..', 'vendor', 'AdditionalConfiguration.php.erb')
     set :additional_configuration_files, []

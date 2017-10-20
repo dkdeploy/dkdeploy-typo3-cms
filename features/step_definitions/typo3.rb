@@ -1,7 +1,7 @@
 Given(/^a successfully deployed TYPO3 application$/) do
   step 'I want to use the database `dkdeploy_typo3_cms`'
   step 'the TYPO3 table be_users exists'
-  step 'a TYPO3 backend user "_cli_lowlevel" exists'
+  step 'a TYPO3 backend user "_cli_" exists'
   step 'I successfully run `cap dev composer:local:run[install]` for up to 60 seconds'
   step 'I successfully run `cap dev db:upload_settings[127.0.0.1,3306,dkdeploy_typo3_cms,root,ilikerandompasswords,utf8]`'
   step 'I successfully run `cap dev typo3:cms:create_db_credentials`'

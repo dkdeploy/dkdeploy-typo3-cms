@@ -8,7 +8,7 @@ include Dkdeploy::Typo3::Cms::Helpers::Cli
 namespace :caretaker do
   desc 'Create - if necessary or configured - and configure TYPO3 Caretaker SSL keys'
   task :create_keys, :create_new_caretaker_keys do |_, args|
-    create_new_keys = 'yes' == ask_variable(args, :create_new_caretaker_keys, 'questions.create_new_keys')
+    create_new_keys = ask_variable(args, :create_new_caretaker_keys, 'questions.create_new_keys') == 'yes'
 
     on roles :app do |server|
       key_is_missing = !test("[ -f #{fetch(:caretaker_private_key_path)} ]")

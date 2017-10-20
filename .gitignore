@@ -18,3 +18,10 @@ tmp
 .vagrant
 .lock
 Gemfile.lock
+spec/fixtures/application/htdocs/typo3_src
+spec/fixtures/application/htdocs/typo3conf/ext
+spec/fixtures/application/htdocs/index.php
+spec/fixtures/application/htdocs/typo3
+spec/fixtures/application/htdocs/bin
+
+

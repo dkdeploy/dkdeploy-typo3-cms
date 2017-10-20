@@ -11,9 +11,9 @@
 		}
 	],
 	"require": {
-		"typo3/cms": "7.6.15",
-		"typo3-ter/realurl": "2.1.5",
-		"helhum/typo3-console": "4.1.2"
+		"typo3/cms": "8.7.7",
+		"typo3-ter/realurl": "2.3.0",
+		"helhum/typo3-console": "4.9.1"
 	},
 	"extra": {
 		"helhum/typo3-console":{
