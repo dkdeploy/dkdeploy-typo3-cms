@@ -33,23 +33,22 @@ Feature: Test tasks for namespace 'typo3:cms:cli:run'
   Scenario: Running several times in release path
     And I extend the development capistrano configuration from the fixture file cli_break_after_three_runs_in_release_path.rb
     When I successfully run `cap dev deploy`
-    Then the output should contain "Running cli task for the 1. time"
-    And the output should contain "Running cli task for the 2. time"
-    And the output should contain "Running cli task for the 3. time"
-    And the output should contain "Maximum number of cli calls reached!"
-    And the output should not contain "Breaking loop after 1 run because block yields false"
-    And the output should not contain "Breaking loop after 2 run because block yields false"
-    And the output should not contain "Breaking loop after 3 run because block yields false"
+    Then the output from "cap dev deploy" should contain "Running cli task for the 1. time"
+    And the output from "cap dev deploy" should contain "Running cli task for the 2. time"
+    And the output from "cap dev deploy" should contain "Running cli task for the 3. time"
+    And the output from "cap dev deploy" should contain "Maximum number of cli calls reached!"
+    And the output from "cap dev deploy" should not contain "Breaking loop after 1 run because block yields false"
+    And the output from "cap dev deploy" should not contain "Breaking loop after 2 run because block yields false"
+    And the output from "cap dev deploy" should not contain "Breaking loop after 3 run because block yields false"
 
   Scenario: Checking injected environment variables
+    And I extend the development capistrano configuration from the fixture file cli_test_tasks_variable_injection.rb
     When I successfully run `cap dev typo3:cms:cli:run`
-    Then the output should contain "TYPO3_COMPOSER_AUTOLOAD=1"
+    Then the output from "cap dev typo3:cms:cli:run" should contain "TYPO3_COMPOSER_AUTOLOAD=1"
 
   Scenario: Checking injected environment variables in release path
     And I extend the development capistrano configuration from the fixture file cli_test_tasks_with_path.rb
     When I successfully run `cap dev deploy`
-# Here in the regex string "any character" is used to match the slashes. Every attempt to use the directory slashes failed for unknown reasons
-    Then the output should match /.var.www.dkdeploy.releases.\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}.typo3.cli_dispatch\.phpsh/
     And the output should contain "TYPO3_COMPOSER_AUTOLOAD=1"
 
   Scenario: Checking injected environment variables

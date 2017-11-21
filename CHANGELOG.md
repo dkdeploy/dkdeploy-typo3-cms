@@ -18,6 +18,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - dkdeploy-core upgrade 9.0
 - Add dependencies for `cucumber`, `rubocop`, `aruba` and `mysql2
 - upgrade vagrant box to `ubuntu/xenial64`
+- update TYPO3 8.7.8
+- moving tasks from step_definitions/typo3.rb to deploy.rb
 
 [Unreleased]: https://github.com/dkdeploy/dkdeploy-typo3-cms/compare/master...develop
 [7.0.0]: https://github.com/dkdeploy/dkdeploy-typo3-cms/releases/tag/v7.0.0
