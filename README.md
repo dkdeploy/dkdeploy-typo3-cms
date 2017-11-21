@@ -2,8 +2,8 @@
 
 # Dkdeploy::Typo3::Cms
 
-[![Build Status](https://api.travis-ci.org/dkdeploy/dkdeploy-typo3-cms.svg?branch=master)](https://travis-ci.org/repositories/dkdeploy/dkdeploy-typo3-cms)
-[![Gem Version](https://badge.fury.io/rb/dkdeploy-typo3-cms.svg)](https://badge.fury.io/rb/dkdeploy-typo3-cms) [![Inline docs](http://inch-ci.org/github/dkdeploy/dkdeploy-typo3-cms.svg?branch=master)](http://inch-ci.org/github/dkdeploy/dkdeploy-typo3-cms)
+[![Build Status](https://travis-ci.org/dkdeploy/dkdeploy-typo3-cms.svg?branch=master)](https://travis-ci.org/dkdeploy/dkdeploy-typo3-cms)
+[![Gem Version](https://badge.fury.io/rb/dkdeploy-typo3-cms.svg)](https://badge.fury.io/rb/dkdeploy-typo3-cms) [![Inline docs](http://inch-ci.org/github/dkdeploy/dkdeploy-typo3-cms.svg?branch=develop)](http://inch-ci.org/github/dkdeploy/dkdeploy-typo3-cms)
 
 ## Description
 
