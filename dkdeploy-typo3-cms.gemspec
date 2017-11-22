@@ -26,6 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'mysql2', '~> 0.3'
   spec.add_development_dependency 'dkdeploy-test_environment', '~> 2.0'
 
-  spec.add_dependency 'dkdeploy-php', '~> 7.0'
+  spec.add_dependency 'dkdeploy-php', '~> 8.0'
   spec.add_dependency 'phpass-ruby', '~> 0.1'
 end

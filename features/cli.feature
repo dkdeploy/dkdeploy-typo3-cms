@@ -44,17 +44,9 @@ Feature: Test tasks for namespace 'typo3:cms:cli:run'
   Scenario: Checking injected environment variables
     And I extend the development capistrano configuration from the fixture file cli_test_tasks_variable_injection.rb
     When I successfully run `cap dev typo3:cms:cli:run`
-    Then the output from "cap dev typo3:cms:cli:run" should contain "TYPO3_COMPOSER_AUTOLOAD=1"
+    Then the output from "cap dev typo3:cms:cli:run" should contain "CUSTOM_VARIABLE=1"
 
   Scenario: Checking injected environment variables in release path
     And I extend the development capistrano configuration from the fixture file cli_test_tasks_with_path.rb
     When I successfully run `cap dev deploy`
-    And the output should contain "TYPO3_COMPOSER_AUTOLOAD=1"
-
-  Scenario: Checking injected environment variables
-    When I successfully run `cap dev typo3:cms:cli:upload_wrapper`
-    Then the remote file "current_path/typo3_cms_cli_dispatch.sh" should contain exactly:
-      """
-      #!/usr/bin/env bash
-      TYPO3_COMPOSER_AUTOLOAD='1' TERM='screen-256color' /usr/bin/env php /var/www/dkdeploy/current/typo3/cli_dispatch.phpsh $@
-      """
+    And the output should contain "CUSTOM_VARIABLE=1"
