@@ -3,6 +3,7 @@ require 'digest/md5'
 require 'dkdeploy/typo3/cms/dsl'
 require 'dkdeploy/typo3/cms/i18n'
 require 'dkdeploy/helpers/common'
+require 'dkdeploy/typo3/cms/helpers/mysql'
 require 'dkdeploy/interaction_handler/password'
 require 'phpass'
 require 'shellwords'
@@ -12,6 +13,7 @@ require 'dkdeploy/typo3/cms/helpers/erb'
 
 include Dkdeploy::Typo3::Cms::Helpers::Erb
 include Dkdeploy::Helpers::Common
+include Dkdeploy::Typo3::Cms::Helpers::Mysql
 include Dkdeploy::Typo3::DSL
 
 namespace :typo3 do
@@ -158,7 +160,7 @@ namespace :typo3 do
       now = Time.now.to_i
 
       sql_string = "INSERT INTO be_users (username, password, admin, tstamp, crdate)
-                      VALUES ('#{typo3_username}', MD5('#{typo3_password}'), 1, #{now}, #{now});"
+                   VALUES ('#{mysql_escape_string typo3_username}', MD5('#{mysql_escape_string typo3_password}'), 1, #{now}, #{now});"
 
       on primary :backend do
         begin
