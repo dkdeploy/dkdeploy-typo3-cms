@@ -21,13 +21,13 @@ namespace :load do
     set :create_caretaker_instance_keys_path, -> { File.join(shared_path, 'config', 'create_caretaker_instance_keys.php') }
     set :caretaker_instance_keys_path, -> { File.join(shared_path, 'config', 'caretaker_instance_keys.php') }
 
-    # Use custom Composer autoload
     set :typo3_environment_cli, {
-      TYPO3_COMPOSER_AUTOLOAD: 1,
       TERM: 'screen-256color'
     }
+
     # Path to typo3_console. Relative path to typo3_console script
-    set :path_to_typo3_console, 'bin/typo3cms'
+    set :path_to_typo3_console, File.join('bin', 'typo3cms')
+    set :path_to_typo3_cli, File.join('bin', 'typo3')
 
     set :additional_configuration_template, File.join(__dir__, '..', '..', '..', 'vendor', 'AdditionalConfiguration.php.erb')
     set :additional_configuration_files, []

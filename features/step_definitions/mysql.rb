@@ -1,4 +1,4 @@
-Given(/^the TYPO3 table be_users exists$/) do # rubocop:disable Metrics/BlockLength
+Given(/^the TYPO3 table be_users exists$/) do
   mysql_client = instantiate_mysql_client @database_name
   mysql_client.query 'DROP TABLE IF EXISTS be_users;'
   mysql_client.query "CREATE TABLE be_users (
@@ -6,13 +6,15 @@ Given(/^the TYPO3 table be_users exists$/) do # rubocop:disable Metrics/BlockLen
                                     pid int(11) unsigned DEFAULT '0' NOT NULL,
                                     tstamp int(11) unsigned DEFAULT '0' NOT NULL,
                                     username varchar(50) DEFAULT '' NOT NULL,
+                                    description varchar(2000) DEFAULT '' NOT NULL,
+                                    avatar int(11) unsigned NOT NULL default '0',
                                     password varchar(100) DEFAULT '' NOT NULL,
                                     admin tinyint(4) unsigned DEFAULT '0' NOT NULL,
                                     usergroup varchar(255) DEFAULT '' NOT NULL,
                                     disable tinyint(1) unsigned DEFAULT '0' NOT NULL,
                                     starttime int(11) unsigned DEFAULT '0' NOT NULL,
                                     endtime int(11) unsigned DEFAULT '0' NOT NULL,
-                                    lang char(2) DEFAULT '' NOT NULL,
+                                    lang varchar(6) DEFAULT '' NOT NULL,
                                     email varchar(80) DEFAULT '' NOT NULL,
                                     db_mountpoints text,
                                     options tinyint(4) unsigned DEFAULT '0' NOT NULL,
@@ -21,7 +23,7 @@ Given(/^the TYPO3 table be_users exists$/) do # rubocop:disable Metrics/BlockLen
                                     realName varchar(80) DEFAULT '' NOT NULL,
                                     userMods text,
                                     allowed_languages varchar(255) DEFAULT '' NOT NULL,
-                                    uc mediumtext,
+                                    uc mediumblob,
                                     file_mountpoints text,
                                     file_permissions text,
                                     workspace_perms tinyint(3) DEFAULT '1' NOT NULL,
@@ -34,7 +36,7 @@ Given(/^the TYPO3 table be_users exists$/) do # rubocop:disable Metrics/BlockLen
                                     usergroup_cached_list text,
                                     workspace_id int(11) DEFAULT '0' NOT NULL,
                                     workspace_preview tinyint(3) DEFAULT '1' NOT NULL,
-                                    category_perms varchar(255) DEFAULT '' NOT NULL,
+                                    category_perms text,
                                     PRIMARY KEY (uid),
                                     KEY parent (pid),
                                     KEY username (username)

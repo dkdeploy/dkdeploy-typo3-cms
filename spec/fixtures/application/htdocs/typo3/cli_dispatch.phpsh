@@ -1,2 +1,0 @@
-<?php
-  echo "TYPO3_COMPOSER_AUTOLOAD=" . getenv("TYPO3_COMPOSER_AUTOLOAD");
