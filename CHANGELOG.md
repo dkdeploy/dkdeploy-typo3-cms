@@ -21,6 +21,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - upgrade vagrant box to `ubuntu/xenial64`
 - update TYPO3 8.7
 - moving deploy tasks from step_definitions/typo3.rb to deploy.rb for the testing 
+- Add TYPO3 specific configuration for assets and database
 
 [Unreleased]: https://github.com/dkdeploy/dkdeploy-typo3-cms/compare/master...develop
 [7.0.0]: https://github.com/dkdeploy/dkdeploy-typo3-cms/releases/tag/v7.0.0
