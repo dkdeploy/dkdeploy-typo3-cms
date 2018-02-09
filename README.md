@@ -13,7 +13,7 @@ dkdeploy-typo3-cms ruby gem represents the extension of [Capistrano](http://capi
 
 Add this line to your application's `Gemfile`
 
-	gem 'dkdeploy-typo3-cms', '~> 7.0'
+	gem 'dkdeploy-typo3-cms', '~> 8.0'
 
 and then execute
 
