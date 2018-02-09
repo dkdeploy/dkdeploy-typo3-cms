@@ -3,6 +3,7 @@ require 'digest/md5'
 require 'dkdeploy/typo3/cms/dsl'
 require 'dkdeploy/typo3/cms/i18n'
 require 'dkdeploy/helpers/common'
+require 'dkdeploy/typo3/cms/helpers/mysql'
 require 'dkdeploy/interaction_handler/password'
 require 'phpass'
 require 'shellwords'
@@ -12,6 +13,7 @@ require 'dkdeploy/typo3/cms/helpers/erb'
 
 include Dkdeploy::Typo3::Cms::Helpers::Erb
 include Dkdeploy::Helpers::Common
+include Dkdeploy::Typo3::Cms::Helpers::Mysql
 include Dkdeploy::Typo3::DSL
 
 namespace :typo3 do
@@ -55,14 +57,20 @@ namespace :typo3 do
           db_settings = read_db_settings_for_context(self)
         end
 
-        config_file_content = <<CONFIG_FILE_CONTENT
-<?php
-$GLOBALS['TYPO3_CONF_VARS']['DB']['database'] = '#{db_settings.fetch('name')}';
-$GLOBALS['TYPO3_CONF_VARS']['DB']['host'] = '#{db_settings.fetch('host')}';
-$GLOBALS['TYPO3_CONF_VARS']['DB']['username'] = '#{db_settings.fetch('username')}';
-$GLOBALS['TYPO3_CONF_VARS']['DB']['password'] = '#{db_settings.fetch('password')}';
-$GLOBALS['TYPO3_CONF_VARS']['DB']['port'] = #{db_settings.fetch('port')};
-CONFIG_FILE_CONTENT
+        config_file_content = <<-CONFIG_FILE_CONTENT
+  <?php
+  $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default'] = [
+    'charset' => '#{db_settings.fetch('charset')}',
+    'dbname' => '#{db_settings.fetch('name')}',
+    'driver' => 'mysqli',
+    'host' => '#{db_settings.fetch('host')}',
+    'password' => '#{db_settings.fetch('password')}',
+    'port' => #{db_settings.fetch('port')},
+    'user' => '#{db_settings.fetch('username')}',
+     // Use init commands from previous configuration files like LocalConfiguration.php
+     'initCommands' => $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['initCommands'] ?? ''
+  ];
+  CONFIG_FILE_CONTENT
 
         upload! StringIO.new(config_file_content), File.join(shared_path, 'config', "db_settings.#{fetch(:stage)}.php")
       end
@@ -91,7 +99,7 @@ CONFIG_FILE_CONTENT
         # rsync to htdocs/typo3temp/ext
         info I18n.t('tasks.fetch_extension.rsync', extension: extension, scope: :dkdeploy)
         rsync_excludes = []
-        rsync_exclude_directories = %w(.git/ .svn/)
+        rsync_exclude_directories = %w[.git/ .svn/]
         rsync_exclude_directories.each do |exclude|
           rsync_excludes << '--exclude=' + exclude
         end
@@ -152,7 +160,7 @@ CONFIG_FILE_CONTENT
       now = Time.now.to_i
 
       sql_string = "INSERT INTO be_users (username, password, admin, tstamp, crdate)
-                      VALUES ('#{typo3_username}', MD5('#{typo3_password}'), 1, #{now}, #{now});"
+                   VALUES ('#{mysql_escape_string typo3_username}', MD5('#{mysql_escape_string typo3_password}'), 1, #{now}, #{now});"
 
       on primary :backend do
         begin
@@ -209,7 +217,7 @@ CONFIG_FILE_CONTENT
     desc 'Update translations for core and extensions (l10n)'
     task :update_translations, :typo3_languages_to_translate do |_, args|
       typo3_languages_to_translate = ask_variable(args, :typo3_languages_to_translate, 'questions.typo3_languages_to_translate')
-      typo3_console 'language:update', typo3_languages_to_translate
+      typo3_cli 'lang:language:update', typo3_languages_to_translate
     end
 
     desc 'Remove not needed extensions'

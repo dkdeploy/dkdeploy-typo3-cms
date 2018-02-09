@@ -79,7 +79,7 @@ Feature: Test tasks for namespace 'typo3:cms'
 		When I successfully run `cap dev "typo3:cms:create_install_tool_password_file[super-secret-password]"`
 		Then a remote file named "shared_path/config/install_tool_password.php" should exist
 
-	Scenario: Check adding a TYPO3 admin user
+	Scenario: Check adding a TYPO3 admin user interactively
 		Given I want to use the database `dkdeploy_typo3_cms`
 		Given the TYPO3 table be_users exists
 		When I run `cap dev typo3:cms:create_db_credentials` interactively
@@ -98,3 +98,40 @@ Feature: Test tasks for namespace 'typo3:cms'
 		And I wait 10 second to let the database commit the transaction
 		Then the database should have a value `admin` in table `be_users` for column `username`
 		Then the database should have a value `2304d4770a72d09106045fea654c4188` in table `be_users` for column `password`
+
+	Scenario: Check adding a Typo3 admin user with a string that needs escaping
+		Given I want to use the database `dkdeploy_typo3_cms`
+		Given the TYPO3 table be_users exists
+		When I run `cap dev typo3:cms:create_db_credentials` interactively
+		And I type "127.0.0.1"
+		And I type "3306"
+		And I type "dkdeploy_typo3_cms"
+		And I type "root"
+		And I type "ilikerandompasswords"
+		And I type "utf8"
+		And I close the stdin stream
+		Then the exit status should be 0
+		When I run `cap dev "typo3:cms:add_admin_user[dkd-admin,DROP TABLE be_users;this')s_a/very_"nasty"\string]"`
+		And I wait 10 second to let the database commit the transaction
+		Then the database should have a value `dkd-admin` in table `be_users` for column `username`
+		Then the database should have a value `857ea8fba149f63590e290ffe69bd33d` in table `be_users` for column `password`
+
+	Scenario: Check adding a Typo3 admin user with a string that needs escaping interactively
+		Given I want to use the database `dkdeploy_typo3_cms`
+		Given the TYPO3 table be_users exists
+		When I run `cap dev typo3:cms:create_db_credentials` interactively
+		And I type "127.0.0.1"
+		And I type "3306"
+		And I type "dkdeploy_typo3_cms"
+		And I type "root"
+		And I type "ilikerandompasswords"
+		And I type "utf8"
+		And I close the stdin stream
+		Then the exit status should be 0
+		When I run `cap dev typo3:cms:add_admin_user` interactively
+		And I type "dkd-admin"
+		And I type "DROP TABLE be_users;this')s_a/very_nasty\string"
+		And I close the stdin stream
+		And I wait 10 second to let the database commit the transaction
+		Then the database should have a value `dkd-admin` in table `be_users` for column `username`
+		Then the database should have a value `a4525cc4adb871fd961be1ffb22be712` in table `be_users` for column `password`

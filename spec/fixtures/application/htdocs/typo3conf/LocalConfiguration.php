@@ -24,5 +24,6 @@ return [
         'systemLog' => 'error_log,,0',
         't3lib_cs_convMethod' => 'mbstring',
         't3lib_cs_utils' => 'mbstring',
+        'encryptionKey' => 'iamarandompw'
     ],
 ];

@@ -2,8 +2,8 @@
 
 # Dkdeploy::Typo3::Cms
 
-[![Build Status](https://api.travis-ci.org/dkdeploy/dkdeploy-typo3-cms.svg?branch=master)](https://travis-ci.org/repositories/dkdeploy/dkdeploy-typo3-cms)
-[![Gem Version](https://badge.fury.io/rb/dkdeploy-typo3-cms.svg)](https://badge.fury.io/rb/dkdeploy-typo3-cms) [![Inline docs](http://inch-ci.org/github/dkdeploy/dkdeploy-typo3-cms.svg?branch=master)](http://inch-ci.org/github/dkdeploy/dkdeploy-typo3-cms)
+[![Build Status](https://travis-ci.org/dkdeploy/dkdeploy-typo3-cms.svg?branch=master)](https://travis-ci.org/dkdeploy/dkdeploy-typo3-cms)
+[![Gem Version](https://badge.fury.io/rb/dkdeploy-typo3-cms.svg)](https://badge.fury.io/rb/dkdeploy-typo3-cms) [![Inline docs](http://inch-ci.org/github/dkdeploy/dkdeploy-typo3-cms.svg?branch=develop)](http://inch-ci.org/github/dkdeploy/dkdeploy-typo3-cms)
 
 ## Description
 
@@ -13,7 +13,7 @@ dkdeploy-typo3-cms ruby gem represents the extension of [Capistrano](http://capi
 
 Add this line to your application's `Gemfile`
 
-	gem 'dkdeploy-typo3-cms', '~> 7.0'
+	gem 'dkdeploy-typo3-cms', '~> 8.0'
 
 and then execute
 
@@ -46,7 +46,7 @@ Certainly you have to adjust `config/deploy.rb` and respective stages and custom
 
 As next you have to append the following line to the `Capfile` in order to make use of dkdeploy extensions in addition to the standard Capistrano tasks:
 
-	require 'capistrano/dkdeploy/typo3-cms'
+	require 'capistrano/dkdeploy/typo3_cms'
 
 To convince yourself, that Capistrano tasks list has benn extended, please run
 
@@ -77,7 +77,7 @@ Add the virtual box alias to your `hosts` file
 ## Contributing
 
 1. Install [git flow](https://github.com/nvie/gitflow)
-2. Install [Homebrew](http://brew.sh/) and run `brew install mysql-connector-c`
+2. Install [Homebrew](http://brew.sh/) and run `brew install mysql`
 3. If project is not checked out already do git clone `git@github.com:dkdeploy/dkdeploy-typo3-cms.git`
 4. Checkout origin develop branch (`git checkout --track -b develop origin/develop`)
 5. Git flow initialize `git flow init -d`

@@ -9,7 +9,7 @@ module Dkdeploy
           # @param cli_params [Array] list of arguments for typo3/cli_dispatch.phpsh
           # @return [Boolean] returns true/false as success of execution
           def typo3_cli(*cli_params)
-            path_to_cli_dispatch = File.join(current_path, 'typo3', 'cli_dispatch.phpsh')
+            path_to_cli_dispatch = File.join(current_path, fetch(:path_to_typo3_cli))
             run_script(current_path, path_to_cli_dispatch, cli_params)
           end
 
@@ -19,7 +19,7 @@ module Dkdeploy
           # @param cli_params [Array] list of arguments for typo3/cli_dispatch.phpsh
           # @return [Boolean] returns true/false as success of execution
           def typo3_cli_in_path(path, *cli_params)
-            path_to_cli_dispatch = File.join(path, 'typo3', 'cli_dispatch.phpsh')
+            path_to_cli_dispatch = File.join(path, fetch(:path_to_typo3_cli))
             run_script(path, path_to_cli_dispatch, cli_params)
           end
 
@@ -32,7 +32,7 @@ module Dkdeploy
           # @param cli_params [Array] list of arguments for typo3/cli_dispatch.phpsh
           # @return [String] returns the last result of executing task
           def capture_typo3_cli_in_loop(maximum_loop_count, *cli_params, &block)
-            path_to_cli_dispatch = File.join(current_path, 'typo3', 'cli_dispatch.phpsh')
+            path_to_cli_dispatch = File.join(current_path, fetch(:path_to_typo3_cli))
             capture_script_in_loop(current_path, path_to_cli_dispatch, maximum_loop_count, cli_params, &block)
           end
 
@@ -46,7 +46,7 @@ module Dkdeploy
           # @param cli_params [Array] list of arguments for typo3/cli_dispatch.phpsh
           # @return [String] returns the last result of executing task
           def capture_typo3_cli_in_path_in_loop(path, maximum_loop_count, *cli_params, &block)
-            path_to_cli_dispatch = File.join(path, 'typo3', 'cli_dispatch.phpsh')
+            path_to_cli_dispatch = File.join(path, fetch(:path_to_typo3_cli))
             capture_script_in_loop(path, path_to_cli_dispatch, maximum_loop_count, cli_params, &block)
           end
 

@@ -1,0 +1,2 @@
+<?php
+  echo "CUSTOM_VARIABLE=" . getenv("CUSTOM_VARIABLE");

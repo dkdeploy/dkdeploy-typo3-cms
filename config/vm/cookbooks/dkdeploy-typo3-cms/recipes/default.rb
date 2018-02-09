@@ -15,7 +15,7 @@ end
 group 'www-data' do
   action :create
   append true
-  members 'vagrant'
+  members 'ubuntu'
 end
 
 # PHP
@@ -24,7 +24,7 @@ include_recipe 'php::module_mysql'
 
 # Apache
 include_recipe 'apache2'
-include_recipe 'apache2::mod_php5'
+include_recipe 'apache2::mod_php'
 
 # install apache2-utils. It is needed for the assets:add_htpasswd task
 package 'apache2-utils' do
@@ -64,7 +64,7 @@ mysql_database 'dkdeploy_typo3_cms' do
 end
 
 directory '/var/www/' do
-  owner 'vagrant' # deployment is done by vagrant user
+  owner 'ubuntu' # deployment is done by ubuntu user
   group 'www-data' # apache2 is executed by www-data and needs access to directory
   mode '0770'
   action :create
