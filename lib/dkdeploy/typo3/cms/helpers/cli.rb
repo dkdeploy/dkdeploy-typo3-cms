@@ -10,7 +10,7 @@ module Dkdeploy
           # @return [Boolean] returns true/false as success of execution
           def typo3_cli(*cli_params)
             path_to_cli_dispatch = File.join(current_path, fetch(:path_to_typo3_cli))
-            run_script(current_path, path_to_cli_dispatch, cli_params)
+            run_script(File.join(current_path), path_to_cli_dispatch, cli_params)
           end
 
           # Execute a task typo3/cli_dispatch.phpsh cli_params in a specific directory
@@ -33,7 +33,7 @@ module Dkdeploy
           # @return [String] returns the last result of executing task
           def capture_typo3_cli_in_loop(maximum_loop_count, *cli_params, &block)
             path_to_cli_dispatch = File.join(current_path, fetch(:path_to_typo3_cli))
-            capture_script_in_loop(current_path, path_to_cli_dispatch, maximum_loop_count, cli_params, &block)
+            capture_script_in_loop(File.join(current_path), path_to_cli_dispatch, maximum_loop_count, cli_params, &block)
           end
 
           # Returns the last results of invocations of a task typo3/cli_dispatch.phpsh cli_params
@@ -56,7 +56,7 @@ module Dkdeploy
           # @return [Boolean] returns true/false as success of execution
           def typo3_console(*cli_params)
             path_to_typo3_console = File.join(current_path, fetch(:path_to_typo3_console))
-            run_script(current_path, path_to_typo3_console, cli_params)
+            run_script(File.join(current_path), path_to_typo3_console, cli_params)
           end
 
           # Execute a typo3_console task with cli_params in a specific directory
@@ -79,7 +79,7 @@ module Dkdeploy
           # @return [String] returns the last result of executing task
           def capture_typo3_console_in_loop(maximum_loop_count, *cli_params, &block)
             path_to_typo3_console = File.join(current_path, fetch(:path_to_typo3_console))
-            capture_script_in_loop(current_path, path_to_typo3_console, maximum_loop_count, cli_params, &block)
+            capture_script_in_loop(File.join(current_path), path_to_typo3_console, maximum_loop_count, cli_params, &block)
           end
 
           # Returns the last results of invocations of a typo3_console task with cli_params
