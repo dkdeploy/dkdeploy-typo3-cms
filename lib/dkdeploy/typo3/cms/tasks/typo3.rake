@@ -208,11 +208,10 @@ namespace :typo3 do
       end
     end
 
-    # Deactivate Task. Wait for https://github.com/TYPO3-Console/typo3_console/pull/288
-    # desc 'add_static_db_content'
-    # task :add_static_db_content do
-    #   typo3_console 'database:importstaticdata'
-    # end
+    desc 'Task to import static extension data into TYPO3'
+    task :setup_active_extensions do
+      typo3_console 'extension:setupactive', '--verbose'
+    end
 
     desc 'Update translations for core and extensions (l10n)'
     task :update_translations, :typo3_languages_to_translate do |_, args|
