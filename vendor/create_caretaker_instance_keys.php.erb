@@ -2,9 +2,9 @@
 
 $handle = fopen('<%= fetch(:caretaker_instance_keys_path) %>', 'w');
 fwrite($handle, "<?php
-\$TYPO3_CONF_VARS['EXT']['extConf']['caretaker_instance'] = serialize(
+\$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['caretaker_instance'] = serialize(
     array_replace_recursive(
-        unserialize(\$TYPO3_CONF_VARS['EXT']['extConf']['caretaker_instance']),
+        unserialize(\$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['caretaker_instance']),
         array (
             'crypto.' => array(
                 'instance.' => array(
