@@ -217,7 +217,7 @@ namespace :typo3 do
     desc 'Update translations for core and extensions (l10n)'
     task :update_translations, :typo3_languages_to_translate do |_, args|
       typo3_languages_to_translate = ask_variable(args, :typo3_languages_to_translate, 'questions.typo3_languages_to_translate')
-      typo3_cli 'lang:language:update', typo3_languages_to_translate
+      typo3_console 'lang:language:update', typo3_languages_to_translate
     end
 
     desc 'Remove not needed extensions'
