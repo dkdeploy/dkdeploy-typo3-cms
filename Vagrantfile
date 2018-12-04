@@ -5,7 +5,7 @@ unless Vagrant.has_plugin?('vagrant-berkshelf')
   abort
 end
 
-Vagrant.require_version '~> 2.0.0'
+Vagrant.require_version '~> 2.0'
 chef_version = '12.9.41'
 
 Vagrant.configure(2) do |config|
