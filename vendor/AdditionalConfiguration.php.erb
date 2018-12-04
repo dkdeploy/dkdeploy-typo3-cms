@@ -1,7 +1,7 @@
 <?php
-<% if File.exist?(File.join('htdocs', 'typo3conf', 'AdditionalConfiguration.php')) %>
+<% if File.exist?(File.join(fetch(:local_web_root_path), 'typo3conf', 'AdditionalConfiguration.php')) %>
 // Content of default configuration file
-<%= sanitize_php File.read(File.join('htdocs', 'typo3conf', 'AdditionalConfiguration.php')) %>
+<%= sanitize_php File.read(File.join(fetch(:local_web_root_path), 'typo3conf', 'AdditionalConfiguration.php')) %>
 <% end %>
 <% if File.exist?(File.join('config', 'typo3', "AdditionalConfiguration.#{fetch(:stage)}.php")) %>
 

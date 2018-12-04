@@ -20,15 +20,18 @@ namespace :typo3 do
   namespace :cms do
     desc 'Clear typo3temp directory'
     task :clear_typo3temp do
+      remote_web_root_path = fetch(:remote_web_root_path, '.')
+
       on release_roles :app do
         info I18n.t('tasks.clear_temp.clear', scope: :dkdeploy)
-        execute :rm, '-rf', File.join(release_path, 'typo3temp', '*')
+        execute :rm, '-rf', File.join(release_path, remote_web_root_path, 'typo3temp', '*')
       end
     end
 
     desc 'Disable TYPO3 install tool'
     task :disable_install_tool do
-      flag = File.join(current_path, 'typo3conf', 'ENABLE_INSTALL_TOOL')
+      remote_web_root_path = fetch(:remote_web_root_path, '.')
+      flag                 = File.join(current_path, remote_web_root_path, 'typo3conf', 'ENABLE_INSTALL_TOOL')
 
       on release_roles :app do
         if test "[ -f #{flag} ]"
@@ -40,10 +43,12 @@ namespace :typo3 do
 
     desc 'Enable TYPO3 install tool'
     task :enable_install_tool do
+      remote_web_root_path = fetch(:remote_web_root_path, '.')
+
       on release_roles :app do
         info I18n.t('tasks.install_tool.enable', scope: :dkdeploy)
-        execute :mkdir, '-p', File.join(current_path, 'typo3conf')
-        execute :touch, File.join(current_path, 'typo3conf', 'ENABLE_INSTALL_TOOL')
+        execute :mkdir, '-p', File.join(current_path, remote_web_root_path, 'typo3conf')
+        execute :touch, File.join(current_path, remote_web_root_path, 'typo3conf', 'ENABLE_INSTALL_TOOL')
       end
     end
 
@@ -78,14 +83,17 @@ namespace :typo3 do
 
     desc 'Download extension to local workspace'
     task :fetch_extension, :extension do |_, args|
-      extension = ask_variable(args, :extension, 'tasks.fetch_extension.extension_name')
+      local_web_root_path  = ask_array_variable(args, :local_web_root_path, 'questions.local_web_root_path')
+      remote_web_root_path = fetch(:remote_web_root_path, '.')
+      extension            = ask_variable(args, :extension, 'tasks.fetch_extension.extension_name')
+
       FileUtils.mkdir_p File.join('temp', 'extensions')
       FileUtils.remove_dir File.join('temp', 'extensions', extension), true
-      source = File.join(current_path, 'typo3conf', 'ext', extension)
+      source = File.join(current_path, remote_web_root_path, 'typo3conf', 'ext', extension)
       target = File.join('temp', 'extensions')
 
       on primary(:backend) do
-        if test "[ -d #{File.join(current_path, 'typo3conf', 'ext', extension)} ]"
+        if test "[ -d #{File.join(current_path, remote_web_root_path, 'typo3conf', 'ext', extension)} ]"
           # download to temp
           info I18n.t('tasks.fetch_extension.download', extension: extension, scope: :dkdeploy)
           download! source, target, via: :scp, recursive: true
@@ -103,7 +111,7 @@ namespace :typo3 do
         rsync_exclude_directories.each do |exclude|
           rsync_excludes << '--exclude=' + exclude
         end
-        execute :rsync, '-vrS', '--force', '-C', '--delete', rsync_excludes, File.join('temp', 'extensions', extension, '/'), File.join('htdocs', 'typo3conf', 'ext', extension, '/')
+        execute :rsync, '-vrS', '--force', '-C', '--delete', rsync_excludes, File.join('temp', 'extensions', extension, '/'), File.join(local_web_root_path, 'typo3conf', 'ext', extension, '/')
       end
     end
 
@@ -221,6 +229,7 @@ namespace :typo3 do
 
     desc 'Remove not needed extensions'
     task :remove_extensions do
+      remote_web_root_path = fetch(:remote_web_root_path, '.')
       installed_extensions = (capture_typo3_console_in_loop 1, 'extension:list', '--active', '--raw').split("\n")
 
       run_locally do
@@ -232,13 +241,13 @@ namespace :typo3 do
 
       on roles :app do
         # Get extensions from typo3conf/ext directory
-        remote_list = capture(:ls, '-x', File.join(current_path, 'typo3conf', 'ext')).split
+        remote_list = capture(:ls, '-x', File.join(current_path, remote_web_root_path, 'typo3conf', 'ext')).split
 
         extensions_to_remove = (remote_list - installed_extensions)
         unless extensions_to_remove.empty?
           info I18n.t('tasks.typo3.cms.v6.remove_extensions.info', scope: :dkdeploy, removed_extensions: extensions_to_remove.join(', '))
           extensions_to_remove.each do |extension|
-            execute :rm, '-rf', "#{release_path}/typo3conf/ext/#{extension}"
+            execute :rm, '-rf', File.join(release_path, remote_web_root_path, 'typo3conf/ext', extension)
           end
         end
       end
@@ -260,8 +269,9 @@ namespace :typo3 do
 
     desc 'Sets up the TYPO3 6+ specific configuration for each stage'
     task :setup_additional_configuration, :additional_configuration_template do |_, args|
+      remote_web_root_path = fetch(:remote_web_root_path, '.')
       configuration_template = ask_variable(args, :additional_configuration_template, 'questions.additional_configuration_template')
-      remote_configuration_file = File.join(release_path, 'typo3conf', 'AdditionalConfiguration.php')
+      remote_configuration_file = File.join(release_path, remote_web_root_path, 'typo3conf', 'AdditionalConfiguration.php')
       unless File.exist?(configuration_template)
         run_locally do
           raise I18n.t('tasks.typo3.cms.v6.setup_additional_configuration.upload_info', configuration_template: configuration_template, scope: :dkdeploy)
