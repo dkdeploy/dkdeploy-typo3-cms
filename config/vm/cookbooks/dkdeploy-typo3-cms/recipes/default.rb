@@ -15,7 +15,7 @@ end
 group 'www-data' do
   action :create
   append true
-  members 'ubuntu'
+  members 'vagrant'
 end
 
 # PHP
