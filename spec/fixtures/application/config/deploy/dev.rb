@@ -11,7 +11,7 @@ unless ssh_key_files.empty?
   # Define generated ssh key files
   set :ssh_options, fetch(:ssh_options).merge(
     {
-      user: 'ubuntu',
+      user: 'vagrant',
       keys: ssh_key_files
     }
   )

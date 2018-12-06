@@ -4,7 +4,7 @@ module Dkdeploy
       # Class for version number
       class Version
         MAJOR = 8
-        MINOR = 0
+        MINOR = 1
         PATCH = 0
 
         def self.to_s
