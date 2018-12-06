@@ -11,6 +11,7 @@ The dkdeploy core maintainers would like to recognize following contributors (in
 - Kieran Hayes
 - Wilfried Irßlinger
 - Thomas Jahnke
+- Hannes Leutloff
 - Gleb Levitin
 - Luka Lüdicke
 - Minh-Thien Nhan
