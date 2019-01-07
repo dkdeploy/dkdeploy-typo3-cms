@@ -29,3 +29,5 @@ Style/FormatStringToken:
   Enabled: false
 Metrics/BlockLength:
   Enabled: false
+Style/MixinUsage:
+  Enabled: false
