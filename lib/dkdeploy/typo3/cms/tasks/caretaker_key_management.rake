@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'erb'
 require 'capistrano/i18n'
 require 'dkdeploy/typo3/cms/i18n'

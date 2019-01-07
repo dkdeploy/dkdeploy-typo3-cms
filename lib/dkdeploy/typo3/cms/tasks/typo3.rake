@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'securerandom'
 require 'digest/md5'
 require 'dkdeploy/typo3/cms/dsl'
@@ -75,7 +77,7 @@ namespace :typo3 do
      // Use init commands from previous configuration files like LocalConfiguration.php
      'initCommands' => $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['initCommands'] ?? ''
   ];
-  CONFIG_FILE_CONTENT
+        CONFIG_FILE_CONTENT
 
         upload! StringIO.new(config_file_content), File.join(shared_path, 'config', "db_settings.#{fetch(:stage)}.php")
       end
@@ -127,13 +129,11 @@ namespace :typo3 do
       encryption_key = ask_variable(args, :encryption_key, 'tasks.encryption_key.enter_key') { |question| question.echo = '*' }
       encryption_key.strip!
 
-      if encryption_key.empty? || encryption_key.length < 8
-        abort I18n.t('tasks.encryption_key.validation_error', scope: :dkdeploy)
-      end
+      abort I18n.t('tasks.encryption_key.validation_error', scope: :dkdeploy) if encryption_key.empty? || encryption_key.length < 8
 
       encryption_key_file_content = "<?php $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey'] = '#{encryption_key}';"
 
-      on release_roles :app do ||
+      on release_roles :app do
         execute :mkdir, '-p', encryption_key_file_path
         upload! StringIO.new(encryption_key_file_content), encryption_key_file
       end
@@ -146,14 +146,12 @@ namespace :typo3 do
       password = ask_variable(args, :password, 'tasks.install_tool_password.enter_password') { |question| question.echo = '*' }
       password.strip!
 
-      if password.empty?
-        abort I18n.t('tasks.install_tool_password.validation_error', scope: :dkdeploy)
-      end
+      abort I18n.t('tasks.install_tool_password.validation_error', scope: :dkdeploy) if password.empty?
 
       password = Phpass.new.hash password
       password_file_content = "<?php $GLOBALS['TYPO3_CONF_VARS']['BE']['installToolPassword'] = '#{password}';"
 
-      on release_roles :app do ||
+      on release_roles :app do
         execute :mkdir, '-p', install_tool_file_path
         upload! StringIO.new(password_file_content), install_tool_file
       end
@@ -234,9 +232,7 @@ namespace :typo3 do
 
       run_locally do
         info installed_extensions.inspect
-        if installed_extensions.empty?
-          raise I18n.t('tasks.typo3.cms.v6.remove_extensions.no_extension_found', scope: :dkdeploy)
-        end
+        raise I18n.t('tasks.typo3.cms.v6.remove_extensions.no_extension_found', scope: :dkdeploy) if installed_extensions.empty?
       end
 
       on roles :app do

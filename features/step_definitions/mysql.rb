@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Given(/^the TYPO3 table be_users exists$/) do
   mysql_client = instantiate_mysql_client @database_name
   mysql_client.query 'DROP TABLE IF EXISTS be_users;'

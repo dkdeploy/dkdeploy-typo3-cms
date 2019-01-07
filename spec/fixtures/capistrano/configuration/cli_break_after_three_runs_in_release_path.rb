@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :typo3 do
   namespace :cms do
     namespace :cli do

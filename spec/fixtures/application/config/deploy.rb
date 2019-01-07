@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 set :application, 'dkdeploy_app'
 set :composer_default_arguments, fetch(:composer_default_arguments) + ['-d=htdocs/']
 

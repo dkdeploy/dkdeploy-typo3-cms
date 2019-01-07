@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Dkdeploy
   module Typo3
     module Cms

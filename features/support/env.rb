@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'dkdeploy/test_environment/application'
 ssh_config = {}
 
@@ -7,7 +9,7 @@ unless ssh_key_files.empty?
   ssh_config = { user: 'vagrant', keys: ssh_key_files }
 end
 
-TEST_APPLICATION = Dkdeploy::TestEnvironment::Application.new(File.expand_path('../../../', __FILE__), 'dkdeploy-typo3-cms.dev', ssh_config)
+TEST_APPLICATION = Dkdeploy::TestEnvironment::Application.new(File.expand_path('../..', __dir__), 'dkdeploy-typo3-cms.dev', ssh_config)
 TEST_APPLICATION.mysql_connection_settings = { host: 'dkdeploy-typo3-cms.dev', username: 'root', password: 'ilikerandompasswords' }
 
 # this configuration tricks Bundler into executing another Bundler project with clean enviroment

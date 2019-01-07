@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 require 'capistrano/dkdeploy/php'
 
 include Capistrano::DSL
 
 # Load dkdeploy tasks
-load File.expand_path('../../../dkdeploy/typo3/cms/tasks/typo3.rake', __FILE__)
-load File.expand_path('../../../dkdeploy/typo3/cms/tasks/typoscript.rake', __FILE__)
-load File.expand_path('../../../dkdeploy/typo3/cms/tasks/cache.rake', __FILE__)
-load File.expand_path('../../../dkdeploy/typo3/cms/tasks/cli.rake', __FILE__)
-load File.expand_path('../../../dkdeploy/typo3/cms/tasks/caretaker_key_management.rake', __FILE__)
+load File.expand_path('../../dkdeploy/typo3/cms/tasks/typo3.rake', __dir__)
+load File.expand_path('../../dkdeploy/typo3/cms/tasks/typoscript.rake', __dir__)
+load File.expand_path('../../dkdeploy/typo3/cms/tasks/cache.rake', __dir__)
+load File.expand_path('../../dkdeploy/typo3/cms/tasks/cli.rake', __dir__)
+load File.expand_path('../../dkdeploy/typo3/cms/tasks/caretaker_key_management.rake', __dir__)
 
 namespace :load do
   task :defaults do

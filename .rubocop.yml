@@ -5,7 +5,7 @@ AllCops:
     - 'config/**/*'
     - 'Vagrantfile'
     - 'vendor/**/*'
-  TargetRubyVersion: 2.2
+  TargetRubyVersion: 2.3
   ExtraDetails: true
   DisplayStyleGuide: true
   DisplayCopNames: true

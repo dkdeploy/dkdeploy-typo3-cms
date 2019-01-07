@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'i18n'
 
 en = {
@@ -106,6 +108,4 @@ en = {
 
 I18n.backend.store_translations(:en, dkdeploy: en)
 
-if I18n.respond_to?(:enforce_available_locales=)
-  I18n.enforce_available_locales = true
-end
+I18n.enforce_available_locales = true if I18n.respond_to?(:enforce_available_locales=)

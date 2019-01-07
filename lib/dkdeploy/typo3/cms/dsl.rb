@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Dkdeploy
   module Typo3
     # TYPO3 dsl api

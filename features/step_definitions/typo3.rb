@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Given(/^a successfully deployed TYPO3 application$/) do
   step 'I want to use the database `dkdeploy_typo3_cms`'
   step 'the TYPO3 table be_users exists'

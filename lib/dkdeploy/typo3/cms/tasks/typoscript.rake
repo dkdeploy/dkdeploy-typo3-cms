@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'pathname'
 require 'dkdeploy/typo3/cms/i18n'
 require 'dkdeploy/helpers/common'
@@ -252,6 +254,7 @@ namespace :typo3 do
         end
 
         next if list_of_files.empty?
+
         config_files = list_of_files.split.map { |file| Pathname.new(file).relative_path_from(Pathname.new(release_path)).dirname.dirname.to_s }
 
         set :typoscript_config_paths, config_files
@@ -272,6 +275,7 @@ namespace :typo3 do
         end
 
         next if list_of_files.empty?
+
         pagets_files = list_of_files.split.map { |file| Pathname.new(file).relative_path_from(Pathname.new(release_path)).dirname.dirname.to_s }
 
         set :typoscript_pagets_paths, pagets_files
@@ -292,6 +296,7 @@ namespace :typo3 do
         end
 
         next if list_of_files.empty?
+
         userts_files = list_of_files.split.map { |file| Pathname.new(file).relative_path_from(Pathname.new(release_path) + remote).dirname.dirname.to_s }
 
         set :typoscript_userts_paths, userts_files
