@@ -8,7 +8,9 @@ rvm:
   - 2.6
 
 before_install:
-  - gem install bundler --no-document
+  - gem install bundler --no-doc
+  - gem install bundler-audit --no-doc
 
 script:
-  - bundle exec rubocop
+  - bundle-audit check --update
+  - bundle exec rubocop --display-cop-names --extra-details
