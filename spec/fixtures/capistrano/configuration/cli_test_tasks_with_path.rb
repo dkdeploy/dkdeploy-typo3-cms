@@ -6,7 +6,7 @@ namespace :typo3 do
       # desc 'Execute TYPO3 cli task in Specific directory'
       # task :run_in_release_path do |task, args| # First agument is directory
       task 'run_in_release_path' do |task, args|
-        typo3_cli_in_path(release_path, args.extras)
+        typo3_console_in_path(release_path, args.extras)
         # Reenable Task to allow multiple invokation
         task.reenable
       end
@@ -14,7 +14,7 @@ namespace :typo3 do
   end
 end
 
-set :path_to_typo3_cli, File.join('catalog', 'variable_injection_test.phpsh')
+set :path_to_typo3_console, File.join('catalog', 'variable_injection_test.phpsh')
 
 set :typo3_environment_cli, {
   CUSTOM_VARIABLE: 1
